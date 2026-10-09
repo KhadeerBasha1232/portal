@@ -29,10 +29,10 @@ curl -fsSL https://raw.githubusercontent.com/KhadeerBasha1232/portal/main/instal
 
 | Distro | Install |
 |---|---|
-| Debian / Ubuntu / Mint / Pop!_OS | `sudo apt install ./portal_*_amd64.deb` |
-| Fedora / RHEL / Rocky / openSUSE | `sudo dnf install ./portal-*.x86_64.rpm` |
-| Alpine | `sudo apk add --allow-untrusted ./portal_*.apk` |
-| Arch / Manjaro | `sudo pacman -U ./portal-*.pkg.tar.zst` |
+| Debian / Ubuntu / Mint / Pop!_OS | `sudo apt install ./portal_*_linux_amd64.deb` |
+| Fedora / RHEL / Rocky / openSUSE | `sudo dnf install ./portal_*_linux_amd64.rpm` |
+| Alpine | `sudo apk add --allow-untrusted ./portal_*_linux_amd64.apk` |
+| Arch / Manjaro | `sudo pacman -U ./portal_*_linux_amd64.pkg.tar.zst` |
 
 Builds exist for `x86_64`, `arm64` (e.g. Raspberry Pi 4/5, Apple Silicon, Graviton) and `armv7`.
 
