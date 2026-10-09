@@ -1,0 +1,56 @@
+version: 2
+
+project_name: portal
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos: [linux, darwin, windows, freebsd]
+    goarch: [amd64, arm64, arm, "386"]
+    goarm: ["7"]
+    ignore:
+      - { goos: darwin, goarch: arm }
+      - { goos: darwin, goarch: "386" }
+      - { goos: windows, goarch: arm }
+      - { goos: freebsd, goarch: arm }
+      - { goos: freebsd, goarch: "386" }
+    flags: [-trimpath]
+    ldflags:
+      - -s -w -X main.version={{ .Version }}
+
+archives:
+  - formats: [tar.gz]
+    format_overrides:
+      - goos: windows
+        formats: [zip]
+    name_template: >-
+      {{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ if eq .Arch "amd64" }}x86_64{{ else if eq .Arch "386" }}i386{{ else if eq .Arch "arm" }}armv{{ .Arm }}{{ else }}{{ .Arch }}{{ end }}
+    files: [README.md, LICENSE]
+
+# Native Linux packages: Debian/Ubuntu (.deb), Fedora/RHEL/openSUSE (.rpm),
+# Alpine (.apk) and Arch (.pkg.tar.zst).
+nfpms:
+  - package_name: portal
+    homepage: https://github.com/KhadeerBasha1232/portal
+    maintainer: KhadeerBasha1232 <KhadeerBasha1232@users.noreply.github.com>
+    description: Share a local port with a friend using a short code. Peer-to-peer, end-to-end encrypted, no server needed.
+    license: MIT
+    formats: [deb, rpm, apk, archlinux]
+    bindir: /usr/bin
+
+checksum:
+  name_template: checksums.txt
+
+changelog:
+  sort: asc
+  filters:
+    exclude: ["^docs:", "^test:", "^chore:"]
+
+release:
+  github:
+    owner: KhadeerBasha1232
+    name: portal
